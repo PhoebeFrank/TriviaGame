@@ -75,12 +75,12 @@ $(document).ready(function () {
         })
     function runTimer(){
         if (!timerOn) {
-        intervalId = setInterval(decrement, 1000); 
+        intervalId = setInterval(change, 1000); 
         timerOn = true;
         }
     }
-    function decrement() {
-        $("#timer").html("<h3>Time remaining: " + timer + "</h3>");
+    function change() {
+        $("#timer").html("<h3>Time to go: " + timer + "</h3>");
         timer --;
     
         if (timer === 0) {
@@ -138,32 +138,32 @@ $(document).ready(function () {
     }
     
     
-    function hidepicture () {
+    function hidepicture() {
         $("#answer").append("<img src=" + pick.photo + ">");
         newArray.push(pick);
-        options.splice(index,1);
-    
-        setTimeout(function() {
+        options.splice(index, 1);
+
+        setTimeout(function () {
             $("#answer").empty();
-            timer= 10;
-    
-       
-        if ((wrongCount + correctCount + unansweredCount) === questionCount) {
-            $("#question").empty();
-            $("#question").html("<h3>Game Over!  Results: </h3>");
-            $("#answer").append("<h4> Correct: " + correctCount + "</h4>" );
-            $("#answer").append("<h4> Incorrect: " + wrongCount + "</h4>" );
-            $("#answer").append("<h4> Unanswered: " + unansweredCount + "</h4>" );
-            $("#reset").show();
-            correctCount = 0;
-            wrongCount = 0;
-            unansweredCount = 0;
-    
-        } else {
-            
-            displayQuestion();
-            runTimer();
-        }
+            timer = 10;
+
+
+            if ((wrongCount + correctCount + unansweredCount) === questionCount) {
+                $("#question").empty();
+                $("#question").html("<h3>Game Over!  Results: </h3>");
+                $("#answer").append("<h4> Correct: " + correctCount + "</h4>");
+                $("#answer").append("<h4> Incorrect: " + wrongCount + "</h4>");
+                $("#answer").append("<h4> Unanswered: " + unansweredCount + "</h4>");
+                $("#reset").show();
+                correctCount = 0;
+                wrongCount = 0;
+                unansweredCount = 0;
+
+            } else {
+
+                displayQuestion();
+                runTimer();
+            }
         }, 2000);
     
     
