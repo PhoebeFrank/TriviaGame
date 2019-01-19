@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var options = [
+    var trivia = [
         {
             question: "Which famous member of the Grateful Dead has an ice cream flavor named after him?", 
             choice: ["Bob Weir", "Jerry Garcia", "Phil Lesh", "Mickey Hart"],
@@ -53,13 +53,13 @@ $(document).ready(function () {
         var wrongCount = 0;
         var unansweredCount = 0;
         var timer = 10;
-        var intervalId;
-        var userAnswer ="";
+        var timerChange;
         var timerOn = false;
-        var questionCount = options.length;
+        var userAnswer ="";
+        var questionCount = trivia.length;
         var pick;
         var index;
-        var newArray = [];
+        var newVersion = [];
         var base = [];
         
     
@@ -69,13 +69,13 @@ $(document).ready(function () {
             $("#start").hide();
             displayQuestion();
             runTimer();
-            for(var i = 0; i < options.length; i++) {
-        base.push(options[i]);
+            for(var i = 0; i < trivia.length; i++) {
+        base.push(trivia[i]);
     }
         })
     function runTimer(){
         if (!timerOn) {
-        intervalId = setInterval(change, 1000); 
+            timerChange = setInterval(change, 1000); 
         timerOn = true;
         }
     }
@@ -93,13 +93,13 @@ $(document).ready(function () {
  
     function stop() {
         timerOn = false;
-        clearInterval(intervalId);
+        clearInterval(timerChange);
     }
   
     function displayQuestion() {
       
-        index = Math.floor(Math.random()*options.length);
-        pick = options[index];
+        index = Math.floor(Math.random()*trivia.length);
+        pick = trivia[index];
     
             $("#question").html("<h2>" + pick.question + "</h2>");
             for(var i = 0; i < pick.choice.length; i++) {
@@ -140,8 +140,8 @@ $(document).ready(function () {
     
     function hidepicture() {
         $("#answer").append("<img src=" + pick.photo + ">");
-        newArray.push(pick);
-        options.splice(index, 1);
+        newVersion.push(pick);
+        trivia.splice(index, 1);
 
         setTimeout(function () {
             $("#answer").empty();
@@ -149,12 +149,13 @@ $(document).ready(function () {
 
 
             if ((wrongCount + correctCount + unansweredCount) === questionCount) {
+                $("#timer").empty();
                 $("#question").empty();
                 $("#question").html("<h3>Game Over!  Results: </h3>");
                 $("#answer").append("<h4> Correct: " + correctCount + "</h4>");
                 $("#answer").append("<h4> Incorrect: " + wrongCount + "</h4>");
                 $("#answer").append("<h4> Unanswered: " + unansweredCount + "</h4>");
-                $("#reset").show();
+                $("#playAgain").show();
                 correctCount = 0;
                 wrongCount = 0;
                 unansweredCount = 0;
@@ -169,12 +170,12 @@ $(document).ready(function () {
     
     }
     
-    $("#reset").on("click", function() {
-        $("#reset").hide();
+    $("#playAgain").on("click", function() {
+        $("#playAgain").hide();
         $("#answer").empty();
         $("#question").empty();
         for(var i = 0; i < base.length; i++) {
-            options.push(base[i]);
+            trivia.push(base[i]);
         }
         
         displayQuestion();
